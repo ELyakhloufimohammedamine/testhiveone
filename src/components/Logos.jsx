@@ -4,8 +4,8 @@ import { motion as Motion } from "framer-motion";
  const items = [
     { name: "AWS", src: "/assets/aws.png" },
     { name: "Azure", src: "/assets/azure.png" },
-    { name: "GCP", src: "/assets/gcp.png" },
-    { name: "Playwright", src: "/assets/playwright.png" },
+    { name: "GCP", src: "/assets/GCP.png" },
+    { name: "Playwright", src: "/assets/Playwright.png" },
     { name: "Cypress", src: "/assets/cypress.png" },
     { name: "Selenium", src: "/assets/selenium.jpg" },
   ]
