@@ -6,7 +6,7 @@ export default function Footer() {
           {/* Logo + brand */}
           <div className="flex items-center gap-3">
             <img
-              src="/src/assets/testHive.png"
+              src="/assets/testHive.png"
               alt="TestHive logo"
               className="h-8 w-8 rounded-md"
             />

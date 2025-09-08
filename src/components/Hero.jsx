@@ -82,7 +82,7 @@ export default function Hero({ onBook, calendlyUrl }) {
                             bg-gradient-to-br from-sky-100 via-violet-100 to-amber-100">
               {imgOk && (
                 <img
-                  src="/src/assets/HERO.png"               // put image in /public/hero.png
+                  src="/assets/HERO.png"               // put image in /public/hero.png
                   alt="TestHive hero"
                   className="h-full w-full object-cover mix-blend-multiply"
                   onError={() => setImgOk(false)}
@@ -91,7 +91,7 @@ export default function Hero({ onBook, calendlyUrl }) {
             </div>
 
             <img
-              src="/src/assets/testHive.png"         // /public/testhive-logo.png
+              src="/assets/testHive.png"         // /public/testhive-logo.png
               alt="TestHive mark"
               className="absolute -bottom-6 -right-6 w-20 h-20 rounded-xl shadow-soft
                          border border-slate-200 bg-white p-2"

@@ -2,12 +2,12 @@
 import { motion as Motion } from "framer-motion";
 
  const items = [
-    { name: "AWS", src: "/src/assets/aws.png" },
-    { name: "Azure", src: "/src/assets/azure.png" },
-    { name: "GCP", src: "/src/assets/gcp.png" },
-    { name: "Playwright", src: "/src/assets/playwright.png" },
-    { name: "Cypress", src: "/src/assets/cypress.png" },
-    { name: "Selenium", src: "/src/assets/selenium.jpg" },
+    { name: "AWS", src: "/assets/aws.png" },
+    { name: "Azure", src: "/assets/azure.png" },
+    { name: "GCP", src: "/assets/gcp.png" },
+    { name: "Playwright", src: "/assets/playwright.png" },
+    { name: "Cypress", src: "/assets/cypress.png" },
+    { name: "Selenium", src: "/assets/selenium.jpg" },
   ]
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };

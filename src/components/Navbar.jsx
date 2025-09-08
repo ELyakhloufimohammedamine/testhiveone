@@ -8,7 +8,7 @@ export default function Navbar({ onBook }) {
         {/* Logo + Brand */}
         <a href="#" className="flex items-center gap-3">
           <img
-            src="/src/assets/testHive.png" // keep the logo in /public/testhive-logo.png
+            src="/assets/testHive.png" // keep the logo in /public/testhive-logo.png
             width={69}
             height={69}
             alt="TestHive logo"
