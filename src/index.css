@@ -1,0 +1,24 @@
+/*
+  The following @tailwind directives require Tailwind CSS to process this file.
+  Make sure you are running Tailwind CLI or using PostCSS with Tailwind plugin.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* App light background */
+body {
+  /* Use Tailwind's utility classes in your HTML, or define custom properties here */
+  /* Example using custom properties (ensure these are defined in your Tailwind config): */
+  background: var(--thBg);
+  color: var(--thInk);
+}
+
+/* Light hero gradient */
+.hero-glow-light{
+  position:absolute; inset:-15% -10% 0 -10%;
+  background:
+    radial-gradient(40% 40% at 20% 25%, rgba(56,189,248,.25) 0%, rgba(56,189,248,0) 60%),
+    radial-gradient(40% 40% at 80% 35%, rgba(167,139,250,.22) 0%, rgba(167,139,250,0) 55%),
+    radial-gradient(30% 30% at 50% 85%, rgba(250,204,21,.18) 0%, rgba(250,204,21,0) 60%);
+  filter: blur(26px); pointer-events:none;
+}

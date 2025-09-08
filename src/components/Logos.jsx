@@ -1,0 +1,47 @@
+// src/components/Assets.jsx
+import { motion as Motion } from "framer-motion";
+
+ const items = [
+    { name: "AWS", src: "/src/assets/aws.png" },
+    { name: "Azure", src: "/src/assets/azure.png" },
+    { name: "GCP", src: "/src/assets/gcp.png" },
+    { name: "Playwright", src: "/src/assets/playwright.png" },
+    { name: "Cypress", src: "/src/assets/cypress.png" },
+    { name: "Selenium", src: "/src/assets/selenium.jpg" },
+  ]
+
+const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
+const fadeUp = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.4 } } };
+
+export default function Assets() {
+  return (
+    <section aria-label="ecosystem" className="py-14 bg-gray-50 border-y border-gray-200">
+      <div className="mx-auto max-w-7xl px-6">
+        <h3 className="text-center text-xs font-semibold tracking-widest text-gray-500 uppercase">
+          Trusted tooling & platforms
+        </h3>
+
+        <Motion.ul
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6"
+        >
+          {items.map(({ name, src }) => (
+            <Motion.li key={name} variants={fadeUp} whileHover={{ y: -2, scale: 1.03 }}>
+              <div className="group w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm transition">
+                <img
+                  src={src}
+                  alt={name}
+                  loading="lazy"
+                  className="mx-auto h-8 w-auto opacity-95 transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            </Motion.li>
+          ))}
+        </Motion.ul>
+      </div>
+    </section>
+  );
+}
