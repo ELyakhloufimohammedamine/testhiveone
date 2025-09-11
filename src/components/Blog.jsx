@@ -7,7 +7,7 @@ const posts = [
     date: "2025-09-01",
     href: "https://www.linkedin.com/company/testhive-nador/posts/?feedView=all",
     tag: "Strategy",
-    img: "/public/assets/risk.png", // optional thumbnail
+    img: "/assets/risk.png", // optional thumbnail
   },
   {
     title: "Playwright suite stabilized in 6 weeks",
@@ -15,7 +15,7 @@ const posts = [
     date: "2025-08-20",
     href: "https://www.linkedin.com/company/testhive-nador/posts/?feedView=all",
     tag: "Case Study",
-    img: "/public/assets/automation.png",
+    img: "/assets/automation.png",
   },
   {
     title: "CI dashboards leaders actually read",
@@ -23,7 +23,7 @@ const posts = [
     date: "2025-08-08",
     href: "https://www.linkedin.com/company/testhive-nador/posts/?feedView=all",
     tag: "Reporting",
-    img: "/public/assets/reporting.png",
+    img: "/assets/reporting.png",
   },
 ]
 
