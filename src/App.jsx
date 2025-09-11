@@ -8,6 +8,8 @@ import Pricing from './components/Pricing'             // ← add
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import CalendlyModal from './components/CalendlyModal'
+import FAQ from "./components/FAQ"
+import Blog from "./components/Blog"
 
 const CALENDLY_URL = 'https://calendly.com/medamineya07/30min' // replace
 
@@ -25,7 +27,10 @@ export default function App() {
       
       <Pricing onBookClick={openCalendly} />            {/* ← here */}
       <CTA onBook={openCalendly} calendlyUrl={CALENDLY_URL} />
+
       
+      <FAQ />
+<Blog />
       <Footer />
       <CalendlyModal url={CALENDLY_URL} open={showCalendly} onClose={closeCalendly} />
     </div>
