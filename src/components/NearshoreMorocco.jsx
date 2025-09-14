@@ -17,11 +17,11 @@ const DEFAULTS = {
   languages: "EN · FR · NL",
   flight: "2–3h to EU hubs",
   assets: {
-    map: "public/assets/map.png",
-    cost: "public/assets/money.png",
-    timezone: "public/assets/time.png",
-    languages: "public/assets/languages.png",
-    security: "public/assets/security.png",
+    map: "/assets/map.png",
+    cost: "/assets/money.png",
+    timezone: "/assets/time.png",
+    languages: "/assets/languages.png",
+    security: "/assets/security.png",
   },
 };
 
