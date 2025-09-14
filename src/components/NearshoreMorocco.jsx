@@ -123,7 +123,7 @@ export default function NearshoreMoroccoSection({
             Morocco QA: cost-smart, time-aligned, multilingual
           </m.h2>
           <m.p variants={fadeUp} className="mt-4 text-sm sm:text-base text-slate-600">
-            Scale quality with senior automation talent operating on European hours. Collaborate in English, French, or Spanish—
+            Scale quality with senior automation talent operating on European hours. Collaborate in English, French, or Dutch—
             and realize cost efficiency without compromising outcomes.
           </m.p>
         </m.div>
