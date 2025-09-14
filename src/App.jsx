@@ -4,7 +4,8 @@ import Hero from './components/Hero'
 import Logos from './components/Logos'
 import Features from './components/Features'
 import Updates from './components/Updates'
-import Pricing from './components/Pricing'             // ← add
+import Pricing from './components/Pricing'
+import NearshoreMorocco from "./components/NearshoreMorocco"             // ← add
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import CalendlyModal from './components/CalendlyModal'
@@ -24,6 +25,7 @@ export default function App() {
       <Hero onBook={openCalendly} calendlyUrl={CALENDLY_URL} />
       <Logos />
       <Features />
+      <NearshoreMorocco onBook={openCalendly} />
       
       <Pricing onBookClick={openCalendly} />            {/* ← here */}
       <CTA onBook={openCalendly} calendlyUrl={CALENDLY_URL} />
@@ -31,6 +33,7 @@ export default function App() {
       
       <FAQ />
 <Blog />
+
       <Footer />
       <CalendlyModal url={CALENDLY_URL} open={showCalendly} onClose={closeCalendly} />
     </div>

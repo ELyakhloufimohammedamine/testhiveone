@@ -15,11 +15,14 @@ export default function Navbar({ onBook }) {
   }, [])
 
   const links = [
-    { href: "#features", label: "Features" },
     { href: "#pricing",  label: "Pricing"  },
+    { href: "#nearshore", label: "Nearshore" },
       { href: "#faq",      label: "FAQ"      },  // ← new
   { href: "#blog",     label: "Blog"     },
     { href: "#contact",  label: "Contact"  },
+    // add to links
+
+
   ]
 
   return (

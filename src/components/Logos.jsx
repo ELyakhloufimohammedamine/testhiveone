@@ -7,7 +7,7 @@ import { motion as Motion } from "framer-motion";
     { name: "GCP", src: "/assets/GCP.png" },
     { name: "Playwright", src: "/assets/Playwright.png" },
     { name: "Cypress", src: "/assets/cypress.png" },
-    { name: "Selenium", src: "/assets/selenium.jpg" },
+    { name: "Selenium", src: "/assets/selenium.png" },
   ]
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
