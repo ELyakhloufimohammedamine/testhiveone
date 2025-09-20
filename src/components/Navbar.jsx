@@ -1,142 +1,311 @@
 // src/components/Navbar.jsx
-import { useState, useEffect } from "react"
-import { Button } from "./ui"
+import { NavLink, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { Button } from "./ui";
+
+const base = "text-sm font-medium transition-colors";
+const active = "text-sky-600 font-semibold";
+const idle = "text-slate-600 hover:text-slate-900";
 
 export default function Navbar({ onBook }) {
-  const [open, setOpen] = useState(false)
-  const [elevated, setElevated] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(null); // desktop dropdowns
+  const [mobileOpen, setMobileOpen] = useState(false);    // mobile drawer
+  const mobileRef = useRef(null);
 
-  // add a tiny shadow when scrolling
+  const toggleDropdown = (name) => {
+    setOpenDropdown((cur) => (cur === name ? null : name));
+  };
+
+  // Close mobile menu on ESC or outside click
   useEffect(() => {
-    const onScroll = () => setElevated(window.scrollY > 8)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    if (!mobileOpen) return;
+    const onKey = (e) => e.key === "Escape" && setMobileOpen(false);
+    const onClick = (e) => {
+      if (mobileRef.current && !mobileRef.current.contains(e.target)) {
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [mobileOpen]);
 
-  const links = [
-    { href: "#pricing",  label: "Pricing"  },
-    { href: "#nearshore", label: "Nearshore" },
-      { href: "#faq",      label: "FAQ"      },  // ← new
-  { href: "#blog",     label: "Blog"     },
-    { href: "#contact",  label: "Contact"  },
-    // add to links
-
-
-  ]
+  // Utility: close all menus
+  const closeAll = () => {
+    setOpenDropdown(null);
+    setMobileOpen(false);
+  };
 
   return (
-    <header
-      className={`sticky top-0 z-40 bg-white/80 backdrop-blur transition-shadow ${
-        elevated ? "shadow-sm" : "shadow-none"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between">
-
-        {/* Brand */}
-        <a href="#" className="flex items-center gap-3">
+    <header className="sticky top-0 z-40 bg-white/70 backdrop-blur border-b border-gray-200">
+      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3" onClick={closeAll}>
           <img
-            src="/assets/testHive.png"   /* place logo in /public/testhive-logo.png */
-            width={56}
-            height={56}
-            alt="TestHive logo"
+            src="/assets/testHive.png"
+            width={40}
+            height={40}
+            alt="TestHive"
             className="rounded-md"
           />
-          <span className="text-2xl font-bold tracking-tight text-slate-900">
+          <span className="text-xl font-bold tracking-tight">
             test<span className="text-sky-500">Hive</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-14 text-sm font-medium text-slate-700">
-          {links.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="relative transition-colors hover:text-slate-900
-                         after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0
-                         after:bg-sky-400 after:transition-all after:duration-300
-                         hover:after:w-full"
+        <nav className="hidden md:flex items-center gap-8">
+          <NavLink to="/whytesthive" className={({ isActive }) => `${base} ${isActive ? active : idle}`}>
+            Why TestHive?
+          </NavLink>
+
+          {/* Pricing dropdown (desktop) */}
+          <div className="relative">
+            <button
+              onClick={() => toggleDropdown("pricing")}
+              className={`${base} ${idle} flex items-center gap-1`}
+              aria-haspopup="menu"
+              aria-expanded={openDropdown === "pricing"}
             >
-              {item.label}
-            </a>
-          ))}
+              Pricing <ChevronDown className="h-4 w-4" />
+            </button>
+            {openDropdown === "pricing" && (
+              <div
+                role="menu"
+                className="absolute left-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white shadow-lg p-2"
+              >
+                <NavLink
+                  to="/pricing"
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 text-sm ${isActive ? "text-sky-600 font-medium" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                  role="menuitem"
+                >
+                  Pricing Overview
+                </NavLink>
+                <NavLink
+                  to="/accelerator"
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 text-sm ${isActive ? "text-sky-600 font-medium" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                  role="menuitem"
+                >
+                  Accelerator
+                </NavLink>
+                <NavLink
+                  to="/partner"
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 text-sm ${isActive ? "text-sky-600 font-medium" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                  role="menuitem"
+                >
+                  Partner Program
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* Blog dropdown (desktop) */}
+          <div className="relative">
+            <button
+              onClick={() => toggleDropdown("blog")}
+              className={`${base} ${idle} flex items-center gap-1`}
+              aria-haspopup="menu"
+              aria-expanded={openDropdown === "blog"}
+            >
+              Blog <ChevronDown className="h-4 w-4" />
+            </button>
+            {openDropdown === "blog" && (
+              <div
+                role="menu"
+                className="absolute left-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white shadow-lg p-2"
+              >
+                <NavLink
+                  to="/blog"
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 text-sm ${isActive ? "text-sky-600 font-medium" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                  role="menuitem"
+                >
+                  Blog
+                </NavLink>
+                <NavLink
+                  to="/nearshore"
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 text-sm ${isActive ? "text-sky-600 font-medium" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                  role="menuitem"
+                >
+                  Nearshore
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          <NavLink to="/faq" className={({ isActive }) => `${base} ${isActive ? active : idle}`}>
+            FAQ
+          </NavLink>
+
+          {/* CTA */}
           <Button
-            onClick={onBook}
-            aria-label="Book your call"
-            className="ml-6 rounded-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500
-                       px-5 py-2 text-white font-semibold shadow-md transition
-                       hover:brightness-110 active:scale-95"
+            onClick={() => {
+              closeAll();
+              onBook?.();
+            }}
+            className="ml-2 rounded-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500 px-5 py-2 text-white font-semibold shadow-md hover:brightness-110 active:scale-95"
           >
             Book a Call
           </Button>
         </nav>
 
-        {/* Mobile controls */}
-        <div className="md:hidden flex items-center gap-3">
-          <Button
-            onClick={onBook}
-            size="sm"
-            className="rounded-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500
-                       px-4 py-2 text-white font-semibold shadow-md active:scale-95"
-          >
-            Book
-          </Button>
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-2 shadow-sm text-slate-700"
+          aria-label="Open menu"
+          onClick={() => setMobileOpen(true)}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
 
-          <button
-            type="button"
-            aria-label="Toggle navigation"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white
-                       text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-95"
-          >
-            {/* hamburger / close */}
-            <svg
-              className={`h-5 w-5 transition-transform ${open ? "rotate-90" : ""}`}
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-              strokeLinecap="round" strokeLinejoin="round"
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 bg-black/40" />
+      )}
+
+      {/* Mobile drawer */}
+      <div
+        ref={mobileRef}
+        className={`fixed inset-x-0 top-0 z-50 origin-top rounded-b-2xl border-b border-slate-200 bg-white p-4 shadow-xl md:hidden transition-transform duration-300 ${
+          mobileOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+        role="dialog"
+        aria-modal="true"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-3" onClick={closeAll}>
+              <img src="/assets/testHive.png" width={36} height={36} alt="TestHive" className="rounded-md" />
+              <span className="text-lg font-bold tracking-tight">
+                test<span className="text-sky-500">Hive</span>
+              </span>
+            </Link>
+            <button
+              className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-2 shadow-sm text-slate-700"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
             >
-              {open ? (
-                <g><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></g>
-              ) : (
-                <g><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></g>
-              )}
-            </svg>
-          </button>
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Mobile links */}
+          <nav className="mt-6 space-y-1">
+            <NavLink
+              to="/whytesthive"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+              }
+              onClick={closeAll}
+            >
+              Why TestHive?
+            </NavLink>
+
+            {/* Pricing group */}
+            <div className="rounded-lg border border-slate-200">
+              <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Pricing
+              </div>
+              <div className="px-1 pb-2">
+                <NavLink
+                  to="/pricing"
+                  className={({ isActive }) =>
+                    `block rounded-md px-2.5 py-2 text-sm ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                >
+                  Pricing Overview
+                </NavLink>
+                <NavLink
+                  to="/accelerator"
+                  className={({ isActive }) =>
+                    `block rounded-md px-2.5 py-2 text-sm ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                >
+                  Accelerator
+                </NavLink>
+                <NavLink
+                  to="/partner"
+                  className={({ isActive }) =>
+                    `block rounded-md px-2.5 py-2 text-sm ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                >
+                  Partner Program
+                </NavLink>
+              </div>
+            </div>
+
+            {/* Blog group */}
+            <div className="rounded-lg border border-slate-200">
+              <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Content
+              </div>
+              <div className="px-1 pb-2">
+                <NavLink
+                  to="/blog"
+                  className={({ isActive }) =>
+                    `block rounded-md px-2.5 py-2 text-sm ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                >
+                  Blog
+                </NavLink>
+                <NavLink
+                  to="/nearshore"
+                  className={({ isActive }) =>
+                    `block rounded-md px-2.5 py-2 text-sm ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+                  }
+                  onClick={closeAll}
+                >
+                  Nearshore
+                </NavLink>
+              </div>
+            </div>
+
+            <NavLink
+              to="/faq"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 ${isActive ? "bg-sky-50 text-sky-700" : "text-slate-700 hover:bg-slate-50"}`
+              }
+              onClick={closeAll}
+            >
+              FAQ
+            </NavLink>
+
+            {/* CTA */}
+            <Button
+              onClick={() => {
+                closeAll();
+                onBook?.();
+              }}
+              className="mt-3 w-full rounded-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500 px-5 py-2 text-white font-semibold shadow-md hover:brightness-110 active:scale-95"
+            >
+              Book a Call
+            </Button>
+          </nav>
         </div>
       </div>
-
-      {/* Mobile dropdown */}
-      <div
-        className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300
-                    ${open ? "max-h-72 opacity-100" : "max-h-0 opacity-0"}`}
-      >
-        <nav className="mx-auto max-w-7xl px-6 pb-4">
-          <ul className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-sm">
-            {links.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-            <li className="p-3">
-              <Button
-                onClick={() => { setOpen(false); onBook?.(); }}
-                className="w-full rounded-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500
-                           px-5 py-2 text-white font-semibold shadow-md active:scale-95"
-              >
-                Book a Call
-              </Button>
-            </li>
-          </ul>
-        </nav>
-      </div>
     </header>
-  )
+  );
 }

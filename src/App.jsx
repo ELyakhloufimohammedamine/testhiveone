@@ -1,41 +1,33 @@
-import { useState } from 'react'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Logos from './components/Logos'
-import Features from './components/Features'
-import Updates from './components/Updates'
-import Pricing from './components/Pricing'
-import NearshoreMorocco from "./components/NearshoreMorocco"             // ← add
-import CTA from './components/CTA'
-import Footer from './components/Footer'
-import CalendlyModal from './components/CalendlyModal'
-import FAQ from "./components/FAQ"
-import Blog from "./components/Blog"
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
 
-const CALENDLY_URL = 'https://calendly.com/medamineya07/30min' // replace
-
+// pages
+import Home from './pages/Home'
+import PricingPage from './pages/PricingPage'
+import POCDetails from './pages/POCDetails'
+import Accelerator from './pages/Accelerator'
+import PartnerProgram from './pages/PartnerProgram'
+import Blog from './pages/Blog'
+import FAQ from './pages/FAQ'
+import NotFound from './pages/NotFound'
+import Nearshore from './pages/Nearshore'
+import WhyTestHive from './pages/WhyTestHive'
 export default function App() {
-  const [showCalendly, setShowCalendly] = useState(false)
-  const openCalendly = () => setShowCalendly(true)
-  const closeCalendly = () => setShowCalendly(false)
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <Navbar onBook={openCalendly} />
-      <Hero onBook={openCalendly} calendlyUrl={CALENDLY_URL} />
-      <Logos />
-      <Features />
-      <NearshoreMorocco onBook={openCalendly} />
-      
-      <Pricing onBookClick={openCalendly} />            {/* ← here */}
-      <CTA onBook={openCalendly} calendlyUrl={CALENDLY_URL} />
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/poc" element={<POCDetails />} />
+        <Route path="/accelerator" element={<Accelerator />} />
+        <Route path="/partner" element={<PartnerProgram />} />
+        <Route path="/nearshore" element={<Nearshore />} />
+        <Route path="/whytesthive" element={<WhyTestHive />} />
 
-      
-      <FAQ />
-<Blog />
-
-      <Footer />
-      <CalendlyModal url={CALENDLY_URL} open={showCalendly} onClose={closeCalendly} />
-    </div>
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   )
 }
